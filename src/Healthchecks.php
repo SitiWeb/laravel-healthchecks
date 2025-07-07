@@ -12,10 +12,9 @@ class Healthchecks
         $url = config('healthchecks.base_url') . $uuid . $suffix;
 
         if (config('app.debug') || config('app.env') !== 'production') {
-            Log::channel('healthchecks')->info("[FAKE PING] {$url}");
+            Log::info("[FAKE PING] {$url}");
             return;
         }
-
         Http::timeout(3)->get($url);
     }
 
