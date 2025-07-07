@@ -1,0 +1,28 @@
+{
+    "name": "sitiweb/laravel-healthchecks",
+    "description": "Ping Healthchecks.io vanuit Laravel cronjobs",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "SitiWeb\\Healthchecks\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "SitiWeb",
+            "email": "70724099+SitiWeb@users.noreply.github.com"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "guzzlehttp/guzzle": "^7.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SitiWeb\\Healthchecks\\HealthchecksServiceProvider"
+            ]
+        }
+    }
+}
