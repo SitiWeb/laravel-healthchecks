@@ -12,8 +12,7 @@ class Healthchecks
         $url = config('healthchecks.base_url') . $uuid . $suffix;
 
         if (config('app.debug') || config('app.env') !== 'production') {
-            Log::info("[FAKE PING] {$url}");
-            return;
+            Log::info("[PING] {$url}");
         }
         Http::timeout(3)->get($url);
     }
@@ -36,8 +35,7 @@ class Healthchecks
     public static function pingUrl(string $url): void
     {
         if (config('app.debug') || config('app.env') !== 'production') {
-            Log::channel('healthchecks')->info("[FAKE PING] {$url}");
-            return;
+            Log::info("[PING] {$url}");
         }
 
         Http::timeout(3)->get($url);
