@@ -21,3 +21,14 @@ Laravel wrapper voor [Healthchecks.io](https://healthchecks.io) waarmee je eenvo
 
 ```bash
 composer require sitiweb/laravel-healthchecks
+```
+### Logbestanden
+
+Als je app in debug- of niet-productieomgeving draait, worden Healthcheck-pings gelogd naar:
+
+
+Zorg dat je log-config hebt gepubliceerd:
+
+```bash
+php artisan vendor:publish --tag=config
+```
