@@ -19,7 +19,7 @@ class ScheduleMacrosServiceProvider extends ServiceProvider
                 throw new \RuntimeException('Missing Healthchecks ping key (set HEALTHCHECKS_PING_KEY in .env)');
             }
 
-            $url = "{$base}/{$key}/{$slug}";
+            $url = "{$base}/ping/{$key}/{$slug}";
 
             $this->before(function () use ($url) {
                 Healthchecks::pingUrl("{$url}/start");

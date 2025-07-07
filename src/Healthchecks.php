@@ -9,11 +9,8 @@ class Healthchecks
 {
     public static function ping(string $uuid, string $suffix = ''): void
     {
-        $url = config('healthchecks.base_url') . $uuid . $suffix;
+        $url = config('healthchecks.base_url') . 'ping/' . $uuid . $suffix;
 
-        if (config('app.debug') || config('app.env') !== 'production') {
-            Log::info("[PING] {$url}");
-        }
         Http::timeout(3)->get($url);
     }
 
@@ -34,10 +31,6 @@ class Healthchecks
 
     public static function pingUrl(string $url): void
     {
-        if (config('app.debug') || config('app.env') !== 'production') {
-            Log::info("[PING] {$url}");
-        }
-
         Http::timeout(3)->get($url);
     }
 }
