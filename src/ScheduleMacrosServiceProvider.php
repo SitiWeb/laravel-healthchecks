@@ -4,25 +4,33 @@ namespace SitiWeb\Healthchecks;
 
 use Illuminate\Console\Scheduling\Event;
 use Illuminate\Support\ServiceProvider;
-use SitiWeb\Healthchecks\Healthchecks;
 
 class ScheduleMacrosServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        Event::macro('healthchecks', function (string $uuid) {
+        Event::macro('healthchecks', function (string $slug) {
             /** @var Event $this */
 
-            $this->before(function () use ($uuid) {
-                Healthchecks::pingStart($uuid);
+            $base = rtrim(config('healthchecks.base_url'), '/');
+            $key = config('healthchecks.ping_key');
+
+            if (!$key) {
+                throw new \RuntimeException('Missing Healthchecks ping key (set HEALTHCHECKS_PING_KEY in .env)');
+            }
+
+            $url = "{$base}/{$key}/{$slug}";
+
+            $this->before(function () use ($url) {
+                Healthchecks::pingUrl("{$url}/start");
             });
 
-            $this->after(function () use ($uuid) {
-                Healthchecks::pingSuccess($uuid);
+            $this->after(function () use ($url) {
+                Healthchecks::pingUrl($url);
             });
 
-            $this->onFailure(function () use ($uuid) {
-                Healthchecks::pingFail($uuid);
+            $this->onFailure(function () use ($url) {
+                Healthchecks::pingUrl("{$url}/fail");
             });
 
             return $this;
