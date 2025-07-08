@@ -20,9 +20,11 @@ class ScheduleMacrosServiceProvider extends ServiceProvider
             }
 
             $url = "{$base}/ping/{$key}/{$slug}";
+            $createNew = config('healthchecks.create_new');
 
-            $this->before(function () use ($url) {
-                Healthchecks::pingUrl("{$url}/start");
+            $this->before(function () use ($url, $createNew) {
+                $startUrl = $createNew ? "{$url}/start?create=1" : "{$url}/start";
+                Healthchecks::pingUrl($startUrl);
             });
 
             $this->after(function () use ($url) {
@@ -35,5 +37,6 @@ class ScheduleMacrosServiceProvider extends ServiceProvider
 
             return $this;
         });
+
     }
 }
